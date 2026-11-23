@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
@@ -71,5 +72,51 @@ public_users.get('/review/:isbn',function (req, res) {
       return res.status(404).json({message: "Book not found"});
     }
   });
-
+// Task 10 - Get all books using Async-Await
+async function getAllBooks() {
+    try {
+      const response = await axios.get('http://localhost:5000/');
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+  // Task 11 - Get book details by ISBN using Async-Await
+  async function getBookByISBN(isbn) {
+    try {
+      const response = await axios.get('http://localhost:5000/isbn/' + isbn);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+  // Task 12 - Get books by author using Async-Await
+  async function getBooksByAuthor(author) {
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/author/' + encodeURIComponent(author)
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+  // Task 13 - Get books by title using Async-Await
+  async function getBooksByTitle(title) {
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/title/' + encodeURIComponent(title)
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 module.exports.general = public_users;
